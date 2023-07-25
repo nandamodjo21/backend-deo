@@ -30,15 +30,18 @@ public class LoginController {
 
         User user = userService.findByUsername(username);
 
+        JSONObject js = new JSONObject();
         if (user == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("username salah");
+            js.put("status", 404);
+            js.put("message", "Password salah");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(js.toJSONString());
         }
 
         String hashPass = DigestUtils.md5Hex(password);
         if (hashPass.equals(user.getPassword())) {
 
             JSONObject response = new JSONObject();
-            JSONObject js = new JSONObject();
+
             response.put("id_login", user.getId());
             response.put("username", user.getUsername());
             response.put("nik", user.getNik().getNik());
@@ -49,10 +52,9 @@ public class LoginController {
             return ResponseEntity.status(HttpStatus.OK).body(js.toJSONString());
         }
 
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("status", 404);
-        jsonObject.put("message", "Password salah");
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(jsonObject.toJSONString());
+        js.put("status", 404);
+        js.put("message", "Password salah");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(js.toJSONString());
     }
 
 }
