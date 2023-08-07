@@ -49,7 +49,7 @@ public class UploadController {
         }
     }
 
-    @GetMapping("/get")
+    @GetMapping("/getMateri")
     public ResponseEntity<List<Upload>> getPdf() {
         return ResponseEntity.status(HttpStatus.OK).body(uploadDao.findAll());
     }

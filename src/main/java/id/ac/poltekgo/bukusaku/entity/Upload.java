@@ -31,6 +31,7 @@ public class Upload {
     private String materi;
 
     @Column(name = "file_materi")
+
     private String fileMateri;
 
 }
