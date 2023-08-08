@@ -12,22 +12,19 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class FileUtil {
 
-    public static String saveFile(String fileName, MultipartFile multipartFile) throws IOException {
+    public static void saveFile(String fileName, MultipartFile multipartFile) throws IOException {
         Path upload = Paths.get("upload");
 
         if (!Files.exists(upload)) {
             Files.createDirectories(upload);
         }
-        String filecode = RandomStringUtils.randomAlphanumeric(8);
 
         try (InputStream inputStream = multipartFile.getInputStream()) {
-
-            Path filePath = upload.resolve(filecode + "-" + fileName);
+            Path filePath = upload.resolve(fileName);
             Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException ioe) {
             throw new IOException("Could not save file: " + fileName, ioe);
         }
-        return filecode;
     }
 
 }
