@@ -33,7 +33,7 @@ public class LoginController {
         JSONObject js = new JSONObject();
         if (user == null) {
             js.put("status", 404);
-            js.put("message", "Password salah");
+            js.put("message", "User Tidak terdaftar");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(js.toJSONString());
         }
 
@@ -44,7 +44,8 @@ public class LoginController {
 
             response.put("id_login", user.getId());
             response.put("username", user.getUsername());
-            response.put("nik", user.getNik().getNik());
+            response.put("nim", user.getNim().getId());
+            response.put("nama", user.getNim().getNik().getNamaLengkap());
             js.put("data", response);
             js.put("status", 200);
             js.put("message", "Login sukses");
