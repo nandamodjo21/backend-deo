@@ -29,8 +29,8 @@ public class User {
     private String id;
 
     @ManyToOne
-    @JoinColumn(name = "id_biodata")
-    private Biodata nik;
+    @JoinColumn(name = "nim")
+    private Mahasiswa nim;
 
     @ManyToOne
     @JoinColumn(name = "id_role")
