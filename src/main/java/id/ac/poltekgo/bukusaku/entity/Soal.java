@@ -1,6 +1,7 @@
 package id.ac.poltekgo.bukusaku.entity;
 
-import java.util.Date;
+import java.sql.Timestamp;
+// import java.util.Date;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -36,8 +37,7 @@ public class Soal {
 
     private String soal;
 
-    @Column(name = "date_created")
-    private Date createdAt;
+    private Timestamp createdAt;
 
     private Integer status;
 

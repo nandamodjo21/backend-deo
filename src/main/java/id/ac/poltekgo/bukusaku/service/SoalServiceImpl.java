@@ -1,5 +1,6 @@
 package id.ac.poltekgo.bukusaku.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -15,8 +16,8 @@ public class SoalServiceImpl implements SoalService {
     private final SoalDao soalDao;
 
     @Override
-    public List<Soal> getSoal() {
-
+    public List<Soal> getSoalByDate() {
+        // TODO Auto-generated method stub
         return soalDao.findAll();
     }
 
