@@ -68,7 +68,7 @@ public class UploadController {
             return ResponseEntity.ok()
                     .contentType(MediaType.parseMediaType(contentType))
                     .header(HttpHeaders.CONTENT_DISPOSITION,
-                            "attachment; filename=\"" + filename + "\"") // Gunakan nama asli file
+                            "inline; filename=\"" + filename + "\"") // Gunakan nama asli file
                     .body(resource);
         } catch (Exception e) {
             e.printStackTrace();
