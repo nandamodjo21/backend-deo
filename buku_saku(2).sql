@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: database:3306
--- Generation Time: Oct 02, 2023 at 02:25 PM
+-- Generation Time: Oct 09, 2023 at 03:00 PM
 -- Server version: 8.0.33
 -- PHP Version: 8.1.17
 
@@ -53,25 +53,11 @@ INSERT INTO `t_agama` (`id_agama`, `agama`) VALUES
 CREATE TABLE `t_biodata` (
   `id_biodata` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `nik` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `nama_lengkap` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `jk` int NOT NULL,
-  `id_agama` int NOT NULL
+  `nama_lengkap` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `jk` int DEFAULT NULL,
+  `id_agama` int DEFAULT NULL,
+  `nim` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `t_biodata`
---
-
-INSERT INTO `t_biodata` (`id_biodata`, `nik`, `nama_lengkap`, `jk`, `id_agama`) VALUES
-('31cc49ec-3ab8-11ee-824b-0242ac120002', '934212144148309', 'Anggraini Noe', 2, 1),
-('8c6666d3-39ba-11ee-b7ec-0242ac120002', '7501140405010003', 'Jefranda Modjo', 1, 1),
-('94f60f3a-39ba-11ee-b7ec-0242ac120002', '750114040501002', 'Serlin S Ahmad', 2, 1),
-('9f39b478-39ba-11ee-b7ec-0242ac120002', '7501140405010001', 'Tofa Deo Ahmad', 1, 1),
-('aec6aa66-39ba-11ee-b7ec-0242ac120002', '7501140405010004', 'Lamin H Datau', 1, 1),
-('bc5a2c9d-39ba-11ee-b7ec-0242ac120002', '7501140405010005', 'Hartati Mahmud', 2, 1),
-('d3913bd3-39ba-11ee-b7ec-0242ac120002', '7501140405010006', 'Sonia Triwati Rauf', 2, 1),
-('d4c67315-3ab7-11ee-824b-0242ac120002', '134390483204823', 'Ahmad Nur Tunggi', 1, 1),
-('fb8193f1-3ab7-11ee-824b-0242ac120002', '2398259739529', 'Isran Noho', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -87,13 +73,6 @@ CREATE TABLE `t_jawaban` (
   `id_nilai` int DEFAULT NULL,
   `createt_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `t_jawaban`
---
-
-INSERT INTO `t_jawaban` (`id_jawaban`, `id_user`, `id_soal`, `jawaban`, `id_nilai`, `createt_at`) VALUES
-('dea2f23f-4873-11ee-b773-0242ac120002', '4637bb62-3cf7-11ee-8947-0242ac120002', '9dd37f33-4872-11ee-b773-0242ac120002', 'tuhan itu 1', 1, '2023-09-01 03:01:38');
 
 -- --------------------------------------------------------
 
@@ -122,20 +101,24 @@ INSERT INTO `t_jenis_kelamin` (`id_jk`, `jenis_kelamin`) VALUES
 
 CREATE TABLE `t_login` (
   `id_login` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `id_role` int NOT NULL,
+  `id_role` int NOT NULL DEFAULT '2',
+  `nim` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `nama_lengkap` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `jk` int DEFAULT NULL,
+  `agama` int DEFAULT NULL,
   `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `is_active` int DEFAULT NULL,
-  `nim` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
+  `status_mhs` int DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `t_login`
 --
 
-INSERT INTO `t_login` (`id_login`, `id_role`, `username`, `password`, `is_active`, `nim`) VALUES
-('4637bb62-3cf7-11ee-8947-0242ac120002', 2, 'tofa', '202cb962ac59075b964b07152d234b70', 1, '20501043'),
-('509746b5-3abe-11ee-824b-0242ac120002', 2, 'gorgon', '202cb962ac59075b964b07152d234b70', 1, '20501018');
+INSERT INTO `t_login` (`id_login`, `id_role`, `nim`, `nama_lengkap`, `jk`, `agama`, `username`, `password`, `is_active`, `status_mhs`) VALUES
+('0abe4fa0-db26-46ec-b2bb-d6563af478b3', 2, '20501018', 'jefranda Modjo', 1, 1, 'nanda', '202cb962ac59075b964b07152d234b70', 1, 1),
+('37a67616-903f-46fb-92e6-a9774fb3c0af', 2, '20501043', 'deo', NULL, NULL, 'tofa', '202cb962ac59075b964b07152d234b70', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -144,20 +127,28 @@ INSERT INTO `t_login` (`id_login`, `id_role`, `username`, `password`, `is_active
 --
 
 CREATE TABLE `t_mahasiswa` (
-  `nim` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `id_biodata` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `id_biodata` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `status_mhs` int NOT NULL DEFAULT '1',
-  `id_prodi` int NOT NULL
+  `id_prodi` int DEFAULT NULL,
+  `idmhs` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `t_mahasiswa`
+-- Table structure for table `t_mahasiswa_seq`
 --
 
-INSERT INTO `t_mahasiswa` (`nim`, `id_biodata`, `status_mhs`, `id_prodi`) VALUES
-('20501018', '8c6666d3-39ba-11ee-b7ec-0242ac120002', 1, 1),
-('20501037', '94f60f3a-39ba-11ee-b7ec-0242ac120002', 1, 1),
-('20501043', '9f39b478-39ba-11ee-b7ec-0242ac120002', 1, 1);
+CREATE TABLE `t_mahasiswa_seq` (
+  `next_val` bigint DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `t_mahasiswa_seq`
+--
+
+INSERT INTO `t_mahasiswa_seq` (`next_val`) VALUES
+(1);
 
 -- --------------------------------------------------------
 
@@ -170,13 +161,6 @@ CREATE TABLE `t_materi` (
   `materi` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `file_materi` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `t_materi`
---
-
-INSERT INTO `t_materi` (`id_materi`, `materi`, `file_materi`) VALUES
-('d5ded38d-10f8-42c9-a642-3c32fd45ac16', 'konsep ketuhanan', 'MODUL_1_KONSEP_KETUHANAN_YANG_MAHA_ESA5.pdf');
 
 -- --------------------------------------------------------
 
@@ -276,13 +260,6 @@ CREATE TABLE `t_soal` (
   `created_at` datetime(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `t_soal`
---
-
-INSERT INTO `t_soal` (`id_soal`, `id_materi`, `soal`, `status`, `created_at`) VALUES
-('9dd37f33-4872-11ee-b773-0242ac120002', 'd5ded38d-10f8-42c9-a642-3c32fd45ac16', 'apa itu konsep ketuhanan?', 1, '2023-09-01 10:52:40.000000');
-
 -- --------------------------------------------------------
 
 --
@@ -346,13 +323,14 @@ ALTER TABLE `t_jenis_kelamin`
 ALTER TABLE `t_login`
   ADD PRIMARY KEY (`id_login`),
   ADD KEY `id_role` (`id_role`),
-  ADD KEY `FKdl2tfqxtf7hotltdo6jn05f4p` (`nim`);
+  ADD KEY `jk` (`jk`),
+  ADD KEY `agama` (`agama`);
 
 --
 -- Indexes for table `t_mahasiswa`
 --
 ALTER TABLE `t_mahasiswa`
-  ADD PRIMARY KEY (`nim`),
+  ADD PRIMARY KEY (`idmhs`),
   ADD KEY `nik` (`id_biodata`),
   ADD KEY `id_prodi` (`id_prodi`);
 
@@ -459,13 +437,15 @@ ALTER TABLE `t_jawaban`
 --
 ALTER TABLE `t_login`
   ADD CONSTRAINT `t_login_ibfk_2` FOREIGN KEY (`id_role`) REFERENCES `t_role` (`id_role`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  ADD CONSTRAINT `t_login_ibfk_3` FOREIGN KEY (`nim`) REFERENCES `t_mahasiswa` (`nim`) ON DELETE RESTRICT ON UPDATE CASCADE;
+  ADD CONSTRAINT `t_login_ibfk_3` FOREIGN KEY (`agama`) REFERENCES `t_agama` (`id_agama`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  ADD CONSTRAINT `t_login_ibfk_4` FOREIGN KEY (`jk`) REFERENCES `t_jenis_kelamin` (`id_jk`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 --
 -- Constraints for table `t_mahasiswa`
 --
 ALTER TABLE `t_mahasiswa`
-  ADD CONSTRAINT `t_mahasiswa_ibfk_2` FOREIGN KEY (`id_biodata`) REFERENCES `t_biodata` (`id_biodata`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  ADD CONSTRAINT `FKsyybadqlu0c5od45fy6044pp4` FOREIGN KEY (`id_biodata`) REFERENCES `t_biodata` (`id_biodata`),
+  ADD CONSTRAINT `t_mahasiswa_ibfk_2` FOREIGN KEY (`id_biodata`) REFERENCES `t_login` (`id_login`) ON DELETE RESTRICT ON UPDATE CASCADE,
   ADD CONSTRAINT `t_mahasiswa_ibfk_3` FOREIGN KEY (`id_prodi`) REFERENCES `t_prodi` (`id_prodi`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 --
