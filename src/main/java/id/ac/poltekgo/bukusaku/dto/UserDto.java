@@ -15,5 +15,7 @@ public class UserDto {
     private String password;
     private String nim;
     private String namaLengkap;
+    private Integer jk;
+    private Integer agama;
 
 }
